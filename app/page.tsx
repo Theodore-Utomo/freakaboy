@@ -26,7 +26,11 @@ export default function Home() {
     setNoClickCount(newCount);
 
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    
+    // Only auto-hide toast if less than 4 clicks
+    if (newCount < 4) {
+      setTimeout(() => setShowToast(false), 3000);
+    }
 
     if (newCount > 2) {
       const newEmoji = {
@@ -44,19 +48,35 @@ export default function Home() {
 
   if (showVideo) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-red-200 to-pink-300 p-4 sm:p-8">
-        <div className="flex flex-col items-center gap-4 sm:gap-6 max-w-full">
+      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-red-200 to-pink-300 p-4 sm:p-8 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          {floatingHearts.map((heart) => (
+            <div
+              key={heart.id}
+              className="absolute text-2xl sm:text-4xl animate-float"
+              style={{
+                left: `${heart.left}%`,
+                top: `${heart.top}%`,
+                animationDelay: `${heart.delay}s`,
+                animationDuration: `${heart.duration}s`,
+              }}
+            >
+              ❤️
+            </div>
+          ))}
+        </div>
+        <div className="relative z-10 flex flex-col items-center gap-4 sm:gap-6 max-w-full">
           <h1 className="text-3xl sm:text-5xl font-bold text-red-600 text-center animate-pulse px-4">
-            Good
+            Yippee
           </h1>
-          <video
-            controls
-            autoPlay
+          <Image
+            src="/freakavideo.gif"
+            alt="Valentine celebration"
+            width={400}
+            height={300}
             className="max-w-4xl w-full rounded-lg shadow-2xl"
-          >
-            <source src="/gemini_generated_video_47E555CE.MOV" type="video/quicktime" />
-            Your browser does not support the video tag.
-          </video>
+            unoptimized
+          />
         </div>
       </div>
     );
@@ -81,7 +101,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Angry emojis */}
       {angryEmojis.map((emoji) => (
         <div
           key={emoji.id}
@@ -105,7 +124,7 @@ export default function Home() {
                   alt="Warning"
                   width={50}
                   height={50}
-                  className="rounded-full sm:w-[80px] sm:h-[80px]"
+                  className="rounded-lg sm:w-[80px] sm:h-[80px] object-contain w-[50px] h-[50px]"
                 />
                 <p className="text-sm sm:text-xl font-bold">
                   I wasn't asking, you cannot say No
@@ -119,14 +138,14 @@ export default function Home() {
                   alt="Warning"
                   width={40}
                   height={40}
-                  className="rounded-full sm:w-[60px] sm:h-[60px]"
+                  className="rounded-lg sm:w-[60px] sm:h-[60px] object-contain w-[40px] h-[40px]"
                 />
                 <Image
                   src="/Subject3.png"
                   alt="Threat"
                   width={40}
                   height={40}
-                  className="rounded-full sm:w-[60px] sm:h-[60px]"
+                  className="rounded-lg sm:w-[60px] sm:h-[60px] object-contain w-[40px] h-[40px]"
                 />
                 <p className="text-sm sm:text-xl font-bold">I'm going to eat you</p>
               </>
@@ -138,14 +157,14 @@ export default function Home() {
                   alt="Warning"
                   width={40}
                   height={40}
-                  className="rounded-full sm:w-[60px] sm:h-[60px]"
+                  className="rounded-lg sm:w-[60px] sm:h-[60px] object-contain w-[40px] h-[40px]"
                 />
                 <Image
                   src="/Subject3.png"
                   alt="Threat"
                   width={40}
                   height={40}
-                  className="rounded-full sm:w-[60px] sm:h-[60px]"
+                  className="rounded-lg sm:w-[60px] sm:h-[60px] object-contain w-[40px] h-[40px]"
                 />
                 <p className="text-base sm:text-2xl font-bold">YOU CANNOT SAY NO</p>
               </>
